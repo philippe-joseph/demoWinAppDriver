@@ -13,8 +13,9 @@ namespace demoWinAppDriverPOM.pages
     {
         private const string MainFormAutId = "";
         private const string MenuMainAccessibilityId = "MainForm";
-        private const string FileElementName = "File";
         private const string OpenDatabaseElementName = "Open Database";
+        // ClassName	WindowsForms10.SysTreeView32.app.0.2bf8098_r6_ad1
+
         private const string TreeViewClassName = "WindowsForms10.SysTreeView32.app.0.2bf8098_r6_ad1";
         private const string DocumentXPath = "//*[@LocalizedControlType='Dokument']";
 
@@ -29,7 +30,7 @@ namespace demoWinAppDriverPOM.pages
         {
             try
             {
-                _driver.FindElementByAccessibilityId(MainFormAutId);
+                _driver.FindElementByAccessibilityId(MenuMainAccessibilityId);
                 return true;
             }
             catch (Exception)
@@ -38,26 +39,17 @@ namespace demoWinAppDriverPOM.pages
             }
         }
 
+        public void FocusWindow()
+        {
+            var handles = _driver.WindowHandles;
+            _driver.SwitchTo().Window(handles[0]);
+        }
+
         public WindowsElement CheckMenuMainAccessibilityId()
         {
             var element = _driver.FindElementByAccessibilityId(MenuMainAccessibilityId);
             Assert.IsNotNull(element);
             return element;
-        }
-
-        public void CheckFileElementName()
-        {
-            try
-            {
-                var element = wait.Until(drv => _driver.FindElementByName(FileElementName));
-                Assert.IsNotNull(element);
-                Console.WriteLine(DateTime.Now.ToString());
-                Console.WriteLine($" Element with Name {FileElementName} found.");
-            }
-            catch (WebDriverTimeoutException)
-            {
-                Assert.Fail($"Element with Name {FileElementName} could not be found.");
-            }
         }
 
         public void CheckOpenDatabaseElementName()
@@ -80,13 +72,7 @@ namespace demoWinAppDriverPOM.pages
         {
             try
             {
-                wait.Until(ExpectedConditions.ElementExists(By.ClassName(TreeViewClassName)));
                 var element = _driver.FindElementByClassName(TreeViewClassName);
-                var multipleElements = _driver.FindElementsByClassName(TreeViewClassName);
-                if (multipleElements.Count > 1)
-                {
-                    Console.WriteLine("Multiple elements found.");
-                }
                 Assert.IsNotNull(element);
                 Console.WriteLine(DateTime.Now.ToString());
                 Console.WriteLine($" Element with ClassName {TreeViewClassName} found.");

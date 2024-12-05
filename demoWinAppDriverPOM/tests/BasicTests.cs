@@ -32,6 +32,8 @@ namespace demoWinAppDriverPOM.tests
                 mainWindow = new MainWindow(Driver);
             }
             mainWindow.CheckMenuMainAccessibilityId();
+            mainWindow.FocusWindow();
+            mainWindow.CheckTreeViewClassName();
         }
         [TestMethod]
         public void OpenKPanotherTime()

@@ -16,6 +16,10 @@ namespace demoWinAppDriverPOM.pages
         private string openDBButton = "m_btnOK";
         //public WindowsElement KeePassOpenDBWindow { get; private set; }
 
+        public WindowsElement KeePassOpenDBWindow()
+        {
+            return _driver.FindElementByAccessibilityId(mainFormAutId);
+        }
         public OpenDatabase(WindowsDriver<WindowsElement> driver)
         {
             _driver = driver;

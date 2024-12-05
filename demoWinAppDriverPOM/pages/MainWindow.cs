@@ -14,6 +14,8 @@ namespace demoWinAppDriverPOM.pages
         private const string MainFormAutId = "";
         private const string MenuMainAccessibilityId = "MainForm";
         private const string OpenDatabaseElementName = "Open Database";
+        private const string MainToolBarLoc = "m_toolMain";
+        private const string MainToolBarButtonAddEntry = "Add Entry";
         // ClassName	WindowsForms10.SysTreeView32.app.0.2bf8098_r6_ad1
 
         private const string TreeViewClassName = "WindowsForms10.SysTreeView32.app.0.2bf8098_r6_ad1";
@@ -81,6 +83,14 @@ namespace demoWinAppDriverPOM.pages
             {
                 Assert.Fail($"Element with ClassName '{TreeViewClassName}' could not be found.");
             }
+        }
+
+        public AddEntry AddNewEntry()
+        {
+            var mainToolBar = _driver.FindElementByAccessibilityId(MainToolBarLoc);
+            var addEntryButton = mainToolBar.FindElementByName(MainToolBarButtonAddEntry);
+            addEntryButton.Click();
+            return new AddEntry(_driver);
         }
 
         public void CheckDocumentXPath()

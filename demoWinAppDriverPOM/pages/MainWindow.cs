@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.Windows;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 
 namespace demoWinAppDriverPOM.pages
@@ -16,6 +14,9 @@ namespace demoWinAppDriverPOM.pages
         private const string OpenDatabaseElementName = "Open Database";
         private const string MainToolBarLoc = "m_toolMain";
         private const string MainToolBarButtonAddEntry = "Add Entry";
+        private const string EntryListWindow = "m_lvEntries";
+        //Name	Add Entry...
+        private const string ContextAddEntry = "Add Entry...";
         // ClassName	WindowsForms10.SysTreeView32.app.0.2bf8098_r6_ad1
 
         private const string TreeViewClassName = "WindowsForms10.SysTreeView32.app.0.2bf8098_r6_ad1";
@@ -92,7 +93,17 @@ namespace demoWinAppDriverPOM.pages
             addEntryButton.Click();
             return new AddEntry(_driver);
         }
-
+        public AddEntry AddNewEntryThroughContext()
+        {
+            var entrylist = _driver.FindElementByAccessibilityId(EntryListWindow);
+            // Rechtsklick auf das Element
+            Actions actions = new Actions(_driver);
+            actions.ContextClick(entrylist).Perform();
+            _driver.FindElementByName(ContextAddEntry).Click();
+            // wait for 5 seconds
+            System.Threading.Thread.Sleep(5000);
+            return new AddEntry(_driver);
+        }
         public void CheckDocumentXPath()
         {
             try

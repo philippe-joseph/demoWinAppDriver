@@ -54,11 +54,11 @@ namespace demoWinAppDriverPOM.tests
             }
             mainWindow.CheckMenuMainAccessibilityId();
             ReportingUtility.LogInfo("Everything looks good");
-            var addEntry = mainWindow.AddNewEntry();
+            //var addEntry = mainWindow.AddNewEntry();
+            var addEntry = mainWindow.AddNewEntryThroughContext();
             addEntry.AddEntryWindowPresent();
             addEntry.SetKeyName("myTestKey");
             mainWindow = addEntry.ClickOK();
-
         }
     }
 }

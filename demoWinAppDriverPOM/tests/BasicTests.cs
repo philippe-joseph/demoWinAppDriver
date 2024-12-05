@@ -23,9 +23,7 @@ namespace demoWinAppDriverPOM.tests
             if (openDB.OpenDBWindowPresent())
             {
                 ReportingUtility.LogInfo("Login to last DB");
-                var screenshotPath = "screenshot.png";
-                ((ITakesScreenshot)Driver).GetScreenshot().SaveAsFile(screenshotPath);
-                ReportingUtility.Test.AddScreenCaptureFromPath(screenshotPath);
+                //HighlightElementAndCaptureScreenshot(openDB.KeePassOpenDBWindow());
                 mainWindow = openDB.EnterPassword();
             } else
             {
@@ -35,8 +33,9 @@ namespace demoWinAppDriverPOM.tests
             mainWindow.FocusWindow();
             mainWindow.CheckTreeViewClassName();
         }
+
         [TestMethod]
-        public void OpenKPanotherTime()
+        public void AddNewEntryToKPDB()
         {
             // Open KeePass
             ReportingUtility.LogInfo("Start KeePass.");
@@ -44,24 +43,9 @@ namespace demoWinAppDriverPOM.tests
             MainWindow mainWindow;
             if (openDB.OpenDBWindowPresent())
             {
-                ReportingUtility.LogInfo("Login to last DB");
-                mainWindow = openDB.EnterPassword();
-            }
-            else
-            {
-                mainWindow = new MainWindow(Driver);
-            }
-            mainWindow.CheckMenuMainAccessibilityId();
-        }
-        [TestMethod]
-        public void OpenKPagain()
-        {
-            // Open KeePass
-            ReportingUtility.LogInfo("Start KeePass.");
-            var openDB = new OpenDatabase(Driver);
-            MainWindow mainWindow;
-            if (openDB.OpenDBWindowPresent())
-            {
+                var screenshotPath = "screenshot.png";
+                ((ITakesScreenshot)Driver).GetScreenshot().SaveAsFile(screenshotPath);
+                ReportingUtility.Test.AddScreenCaptureFromPath(screenshotPath);
                 mainWindow = openDB.EnterPassword();
             }
             else
@@ -70,6 +54,11 @@ namespace demoWinAppDriverPOM.tests
             }
             mainWindow.CheckMenuMainAccessibilityId();
             ReportingUtility.LogInfo("Everything looks good");
+            var addEntry = mainWindow.AddNewEntry();
+            addEntry.AddEntryWindowPresent();
+            addEntry.SetKeyName("myTestKey");
+            mainWindow = addEntry.ClickOK();
+
         }
     }
 }

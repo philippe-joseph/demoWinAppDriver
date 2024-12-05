@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using demoWinAppDriverPOM.utils;
-using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
 using OpenQA.Selenium.Remote;
 
@@ -13,20 +12,13 @@ namespace demoWinAppDriverPOM.utils
         private const string KeePassAppId = @"C:\Users\Philippe\Downloads\KeePass-2.57.1\KeePass.exe";
 
         public TestContext TestContext { get; set; }
-        //[ClassInitialize]
-        //public static void AssemblyInit(TestContext context)
-        //{
-        //    ReportingUtility.InitializeReport();
-        //}
 
-        //public WindowsDriver<WindowsElement> Driver { get; }
         [TestInitialize]
         public void Setup()
         {
             ReportingUtility.InitializeReport();
             ReportingUtility.CreateTest(TestContext.TestName);
-
-            // Create a new session to launch Notepad application
+            // Initialisiere den Driver
             DesiredCapabilities appCapabilities = new DesiredCapabilities();
             appCapabilities.SetCapability("app", KeePassAppId);
             this.Driver = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appCapabilities);
@@ -34,6 +26,7 @@ namespace demoWinAppDriverPOM.utils
             Assert.IsNotNull(Driver.SessionId);
             ReportingUtility.LogInfo("Driver initialized successfully.");
         }
+
         [TestCleanup]
         public void TearDown()
         {
@@ -48,10 +41,5 @@ namespace demoWinAppDriverPOM.utils
             }
             ReportingUtility.FinalizeReport();
         }
-        //[ClassCleanup]
-        //public static void AssemblyCleanup()
-        //{
-        //    ReportingUtility.FinalizeReport();
-        //}
     }
 }

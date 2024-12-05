@@ -1,49 +1,77 @@
 ﻿using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace demoWinAppDriverPOM.utils
 {
-    internal class ReportingUtility
+    public static class ReportingUtility
     {
-        public static ExtentReports Extent;
-        public static ExtentTest Test;
+        private static ExtentReports _extent;
+        private static ExtentTest _currentTest;
+        public static ExtentTest Test => _currentTest;
+
+        private static readonly object LockObject = new object();
 
         public static void InitializeReport()
         {
-            var htmlReporter = new ExtentSparkReporter("TestReport.html");
-            htmlReporter.Config.DocumentTitle = "Automation Test Report";
-            htmlReporter.Config.ReportName = "My WinAppDriver Tests";
-            htmlReporter.Config.Theme = AventStack.ExtentReports.Reporter.Config.Theme.Standard;
+            if (_extent == null)
+            {
+                lock (LockObject)
+                {
+                    if (_extent == null) // Doppelte Prüfung
+                    {
+                        var htmlReporter = new ExtentSparkReporter("TestReport.html");
+                        htmlReporter.Config.DocumentTitle = "KeePass Test Report";
+                        htmlReporter.Config.ReportName = "KeePass Automation Tests";
+                        htmlReporter.Config.Theme = AventStack.ExtentReports.Reporter.Config.Theme.Standard;
 
-            Extent = new ExtentReports();
-            Extent.AttachReporter(htmlReporter);
+                        _extent = new ExtentReports();
+                        _extent.AttachReporter(htmlReporter);
+                    }
+                }
+            }
+        }
+
+        public static ExtentReports GetReportInstance()
+        {
+            if (_extent == null)
+            {
+                InitializeReport();
+            }
+            return _extent;
         }
 
         public static void FinalizeReport()
         {
-            Extent.Flush();
+            _extent?.Flush();
+        }
+
+        public static bool IsReportInitialized()
+        {
+            return _extent != null;
         }
 
         public static void CreateTest(string testName)
         {
-            Test = Extent.CreateTest(testName);
+            if (_extent == null)
+            {
+                throw new NullReferenceException("ExtentReports instance is null. Ensure InitializeReport() was called.");
+            }
+            _currentTest = _extent.CreateTest(testName);
         }
 
         public static void LogPass(string message)
         {
-            Test.Pass(message);
+            _currentTest?.Pass(message);
         }
 
         public static void LogFail(string message)
         {
-            Test.Fail(message);
+            _currentTest?.Fail(message);
         }
 
         public static void LogInfo(string message)
         {
-            Test.Info(message);
+            _currentTest?.Info(message);
         }
     }
 }

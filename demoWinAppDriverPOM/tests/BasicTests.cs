@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using demoWinAppDriverPOM.utils;
 using demoWinAppDriverPOM.pages;
+using OpenQA.Selenium;
 
 namespace demoWinAppDriverPOM.tests
 {
@@ -22,6 +23,9 @@ namespace demoWinAppDriverPOM.tests
             if (openDB.OpenDBWindowPresent())
             {
                 ReportingUtility.LogInfo("Login to last DB");
+                var screenshotPath = "screenshot.png";
+                ((ITakesScreenshot)Driver).GetScreenshot().SaveAsFile(screenshotPath);
+                ReportingUtility.Test.AddScreenCaptureFromPath(screenshotPath);
                 mainWindow = openDB.EnterPassword();
             } else
             {

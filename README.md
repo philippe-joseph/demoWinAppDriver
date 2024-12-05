@@ -16,7 +16,7 @@ Das Projekt `demoWinAppDriverPOM` ist eine Testautomatisierungs-Suite für die K
   - `pages/` - Enthält Page-Object-Model-Klassen.
     - `MainWindow.cs` - Repräsentiert das Hauptfenster der KeePass-Anwendung.
   - `tests/` - Enthält die Testklassen.
-    - `BasicTests.cs` - Beispielhafte Testfälle.
+    - `BasicTests` - Beispielhafte Testfälle.
   - `utils/` - Dienstprogramme und Hilfsklassen.
     - `KeePassBase.cs` - Basisklasse für Tests, die den KeePass-Treiber initialisiert.
     - `ReportingUtility.cs` - Dienstprogramm für die Berichterstellung.
@@ -37,3 +37,16 @@ Um neue Tests hinzuzufügen oder bestehende Tests zu erweitern, folgen Sie diese
    - Verwenden Sie die Methoden der Klasse `ReportingUtility`, um Testschritte und Ergebnisse zu protokollieren.
 
 Beispiel:
+```cs
+[TestClass]
+public class NewTests : KeePassBase
+{
+    [TestMethod]
+    public void NewTest()
+    {
+        ReportingUtility.LogInfo("Start new test.");
+        var mainWindow = new MainWindow(Driver);
+        mainWindow.FocusWindow();
+        // Weitere Testschritte...
+    }
+}

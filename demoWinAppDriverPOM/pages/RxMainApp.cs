@@ -12,6 +12,7 @@ namespace demoWinAppDriverPOM.pages
         private readonly WindowsDriver<WindowsElement> _driver;
         //AutomationId	RxMainFrame
         private string mainFormAutId = "RxMainFrame";
+        private string regTabNameDB = "Test database";
 
         public RxMainApp(WindowsDriver<WindowsElement> driver)
         {
@@ -29,6 +30,13 @@ namespace demoWinAppDriverPOM.pages
             {
                 return false;
             }
+        }
+
+        public void SwitchToDataBase()
+        {
+            var dbTab = _driver.FindElementByName(regTabNameDB);
+            dbTab.Click();
+
         }
     }
 }

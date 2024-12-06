@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.Windows;
 using OpenQA.Selenium.Interactions;
@@ -17,6 +18,7 @@ namespace demoWinAppDriverPOM.pages
         private const string EntryListWindow = "m_lvEntries";
         //Name	Add Entry...
         private const string ContextAddEntry = "Add Entry...";
+        private const string KeyEntryElement = "ListViewItem-";
         // ClassName	WindowsForms10.SysTreeView32.app.0.2bf8098_r6_ad1
 
         private const string TreeViewClassName = "WindowsForms10.SysTreeView32.app.0.2bf8098_r6_ad1";
@@ -118,6 +120,39 @@ namespace demoWinAppDriverPOM.pages
             {
                 Assert.Fail($"Element with XPath {DocumentXPath} could not be found.");
             }
+        }
+        public Boolean ValidateListItemExists(int index)
+        {
+            try
+            {
+                _driver.FindElementByAccessibilityId(KeyEntryElement + index);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public string GetListItemUsername(int index)
+        {
+            var kpWindow = _driver.FindElementByAccessibilityId(EntryListWindow);
+            kpWindow.Click();
+            var entry = _driver.FindElementByAccessibilityId(KeyEntryElement + index);
+            return entry.FindElementByAccessibilityId("ListViewSubItem-1").Text;
+        }
+        public string GetListItemPassword(int index)
+        {
+            var entry = _driver.FindElementByAccessibilityId(KeyEntryElement + index);
+            // Verwende Actions, um den Doppelklick auszuführen
+            var actions = new Actions(_driver);
+            actions.DoubleClick(entry).Perform(); // Doppelklick auf das Passwortfeld
+
+            Thread.Sleep(500);
+
+            // Passwort aus der Zwischenablage abrufen
+            string password = Clipboard.GetText();
+            return password;
         }
     }
 }

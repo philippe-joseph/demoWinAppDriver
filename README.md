@@ -9,9 +9,7 @@ Das Projekt `demoWinAppDriverPOM` ist eine Testautomatisierungs-Suite für die K
 - `demoWinAppDriverPOM/`
   - `bin/` - Kompilierte Binärdateien.
   - `demoWinAppDriverPOM.csproj` - Projektdatei.
-  - `KeePassSession.cs` - Initialisiert eine KeePass-Sitzung.
   - `MainApp.cs` - Hauptanwendungsklasse.
-  - `MSTestSettings.cs` - MSTest-Einstellungen.
   - `obj/` - Objektdateien.
   - `pages/` - Enthält Page-Object-Model-Klassen.
     - `MainWindow.cs` - Repräsentiert das Hauptfenster der KeePass-Anwendung.

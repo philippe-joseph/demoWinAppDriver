@@ -2,12 +2,15 @@
 using demoWinAppDriverPOM.utils;
 using OpenQA.Selenium.Appium.Windows;
 using OpenQA.Selenium.Remote;
+using OpenQA.Selenium;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace demoWinAppDriverPOM.utils
 {
     public class KeePassBase
     {
-        protected WindowsDriver<WindowsElement> Driver;
+        public WindowsDriver<WindowsElement> Driver;
         private const string WindowsApplicationDriverUrl = "http://127.0.0.1:4723";
         private const string KeePassAppId = @"C:\Users\Philippe\Downloads\KeePass-2.57.1\KeePass.exe";
 
@@ -21,6 +24,7 @@ namespace demoWinAppDriverPOM.utils
             // Initialisiere den Driver
             DesiredCapabilities appCapabilities = new DesiredCapabilities();
             appCapabilities.SetCapability("app", KeePassAppId);
+            appCapabilities.SetCapability("language", "de-DE");
             this.Driver = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appCapabilities);
             Assert.IsNotNull(Driver);
             Assert.IsNotNull(Driver.SessionId);
@@ -40,6 +44,37 @@ namespace demoWinAppDriverPOM.utils
                 ReportingUtility.LogFail($"Driver quit failed: {ex.Message}");
             }
             ReportingUtility.FinalizeReport();
+        }
+
+
+
+        public void HighlightElementAndCaptureScreenshot(WindowsElement element)
+        {
+            // Nimm einen Screenshot des gesamten Fensters auf
+            var screenshot = ((ITakesScreenshot)Driver).GetScreenshot();
+            var screenshotPath = "highlighted_screenshot.png";
+            screenshot.SaveAsFile(screenshotPath, ScreenshotImageFormat.Png);
+
+            // Lade den Screenshot als Bitmap
+            using (var bitmap = new Bitmap(screenshotPath))
+            {
+                using (var graphics = Graphics.FromImage(bitmap))
+                {
+                    // Hole die Position und Größe des Elements
+                    var location = element.Location;
+                    var size = element.Size;
+
+                    // Zeichne einen roten Rahmen um das Element
+                    var pen = new Pen(Color.Red, 3); // 3 Pixel dick
+                    graphics.DrawRectangle(pen, new Rectangle(location.X, location.Y, size.Width, size.Height));
+                }
+
+                // Speichere das bearbeitete Bild
+                bitmap.Save(screenshotPath, ImageFormat.Png);
+            }
+
+            // Füge den Screenshot dem Report hinzu
+            ReportingUtility.Test.AddScreenCaptureFromPath(screenshotPath);
         }
     }
 }

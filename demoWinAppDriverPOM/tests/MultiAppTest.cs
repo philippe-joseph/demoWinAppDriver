@@ -49,7 +49,6 @@ namespace demoWinAppDriverPOM.tests
             if (openDB.OpenDBWindowPresent())
             {
                 ReportingUtility.LogInfo("Login to last DB");
-                //HighlightElementAndCaptureScreenshot(openDB.KeePassOpenDBWindow());
                 mainWindow = openDB.EnterPassword();
             }
             else
@@ -57,10 +56,17 @@ namespace demoWinAppDriverPOM.tests
                 mainWindow = new MainWindow(Driver);
             }
             mainWindow.CheckMenuMainAccessibilityId();
-            //var secondApp = new SecondAppBase();
-            //secondApp.Setup();
-            // Zugriff auf SecondAppDriver
-            //secondAppBase.SecondAppDriver.FindElementByAccessibilityId("OtherElementId").Click();
+            RxMainApp rxMainApp = new RxMainApp(SecondAppDriver);
+            if (rxMainApp.MainFormPresent())
+            {
+                ReportingUtility.LogInfo("RxMainApp is present");
+                //rxMainApp.ClickButton();
+            }
+            else
+            {
+                ReportingUtility.LogInfo("RxMainApp is not present");
+
+            }
         }
     }
 }

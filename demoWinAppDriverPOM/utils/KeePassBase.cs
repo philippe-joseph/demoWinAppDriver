@@ -52,29 +52,31 @@ namespace demoWinAppDriverPOM.utils
         {
             // Nimm einen Screenshot des gesamten Fensters auf
             var screenshot = ((ITakesScreenshot)Driver).GetScreenshot();
-            var screenshotPath = "highlighted_screenshot.png";
-            screenshot.SaveAsFile(screenshotPath, ScreenshotImageFormat.Png);
 
-            // Lade den Screenshot als Bitmap
-            using (var bitmap = new Bitmap(screenshotPath))
+            // Lade den Screenshot direkt in einen Memory Stream
+            using (var memoryStream = new MemoryStream(screenshot.AsByteArray))
             {
-                using (var graphics = Graphics.FromImage(bitmap))
+                using (var bitmap = new Bitmap(memoryStream))
                 {
-                    // Hole die Position und Größe des Elements
-                    var location = element.Location;
-                    var size = element.Size;
+                    using (var graphics = Graphics.FromImage(bitmap))
+                    {
+                        // Hole die Position und Größe des Elements
+                        var location = element.Location;
+                        var size = element.Size;
 
-                    // Zeichne einen roten Rahmen um das Element
-                    var pen = new Pen(Color.Red, 3); // 3 Pixel dick
-                    graphics.DrawRectangle(pen, new Rectangle(location.X, location.Y, size.Width, size.Height));
+                        // Zeichne einen roten Rahmen um das Element
+                        var pen = new Pen(Color.Red, 3); // 3 Pixel dick
+                        graphics.DrawRectangle(pen, new Rectangle(location.X, location.Y, size.Width, size.Height));
+                    }
+
+                    // Speichere das bearbeitete Bild
+                    var screenshotPath = "highlighted_screenshot.png";
+                    bitmap.Save(screenshotPath, ImageFormat.Png);
+
+                    // Füge den Screenshot dem Report hinzu
+                    ReportingUtility.Test.AddScreenCaptureFromPath(screenshotPath);
                 }
-
-                // Speichere das bearbeitete Bild
-                bitmap.Save(screenshotPath, ImageFormat.Png);
             }
-
-            // Füge den Screenshot dem Report hinzu
-            ReportingUtility.Test.AddScreenCaptureFromPath(screenshotPath);
         }
     }
 }

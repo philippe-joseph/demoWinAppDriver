@@ -23,7 +23,7 @@ namespace demoWinAppDriverPOM.tests
             if (openDB.OpenDBWindowPresent())
             {
                 ReportingUtility.LogInfo("Login to last DB");
-                //HighlightElementAndCaptureScreenshot(openDB.KeePassOpenDBWindow());
+                HighlightElementAndCaptureScreenshot(openDB.KeePassOpenDBWindow());
                 mainWindow = openDB.EnterPassword();
             } else
             {

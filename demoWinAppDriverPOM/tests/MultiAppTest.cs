@@ -67,6 +67,16 @@ namespace demoWinAppDriverPOM.tests
                 ReportingUtility.LogInfo("RxMainApp is not present");
 
             }
+            rxMainApp.SwitchToDataBase();
+            mainWindow.ValidateListItemExists(1);
+            var username = mainWindow.GetListItemUsername(1);
+            var password = mainWindow.GetListItemPassword(1);
+            ReportingUtility.LogInfo("Username: " + username);
+            ReportingUtility.LogInfo("Password: " + password);
+            RxTestDatabase rxTestDatabase = new RxTestDatabase(SecondAppDriver);
+            rxTestDatabase.EnterFirstName(username);
+            rxTestDatabase.EnterLastName(password);
+
         }
     }
 }

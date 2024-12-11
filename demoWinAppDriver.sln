@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35521.163 d17.12
+VisualStudioVersion = 17.12.35521.163
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "demoWinAppDriverPOM", "demoWinAppDriverPOM\demoWinAppDriverPOM.csproj", "{E8E15BCA-6EBE-4F45-867D-B1FD53615076}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject2", "TestProject2\TestProject2.csproj", "{E30EBB35-DC1C-451C-9D4A-B16C8C458F38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{E8E15BCA-6EBE-4F45-867D-B1FD53615076}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8E15BCA-6EBE-4F45-867D-B1FD53615076}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8E15BCA-6EBE-4F45-867D-B1FD53615076}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E30EBB35-DC1C-451C-9D4A-B16C8C458F38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E30EBB35-DC1C-451C-9D4A-B16C8C458F38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E30EBB35-DC1C-451C-9D4A-B16C8C458F38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E30EBB35-DC1C-451C-9D4A-B16C8C458F38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

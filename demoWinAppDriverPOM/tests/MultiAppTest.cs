@@ -78,5 +78,22 @@ namespace demoWinAppDriverPOM.tests
             rxTestDatabase.EnterLastName(password);
 
         }
+        [TestMethod]
+        public void TestRxUiElemnts()
+        {
+            RxMainApp rxMainApp = new RxMainApp(SecondAppDriver);
+            if (rxMainApp.MainFormPresent())
+            {
+                ReportingUtility.LogInfo("RxMainApp is present");
+            }
+            else
+            {
+                ReportingUtility.LogInfo("RxMainApp is not present");
+            }
+            var uiElemArea = new RxUIElementTestArea(SecondAppDriver);
+            uiElemArea.GetTabElement().Click();
+            var response = uiElemArea.FindeUserEntryByFirstAndLastName("Nicole", "Wallace");
+            ReportingUtility.LogInfo("Response: " + response);
+        }
     }
 }

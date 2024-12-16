@@ -10,7 +10,6 @@ namespace demoWinAppDriverPOM.pages
 {
     internal class MainWindow
     {
-        private const string MainFormAutId = "";
         private const string MenuMainAccessibilityId = "MainForm";
         private const string OpenDatabaseElementName = "Open Database";
         private const string MainToolBarLoc = "m_toolMain";
@@ -71,6 +70,16 @@ namespace demoWinAppDriverPOM.pages
             {
                 Assert.Fail($"Element with Name {OpenDatabaseElementName} could not be found.");
             }
+        }
+
+        public OpenDatabaseFileSelect OpenDatabaseFileSelect()
+        {
+            var element = _driver.FindElementByName(OpenDatabaseElementName);
+            element.Click();
+            var openDatabaseFileSelect = new OpenDatabaseFileSelect(_driver);
+            var fluentWait = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
+            fluentWait.Until(driver => openDatabaseFileSelect.IsMainDialogPresent());
+            return openDatabaseFileSelect;
         }
 
         public void CheckTreeViewClassName()

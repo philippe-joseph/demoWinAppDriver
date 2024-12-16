@@ -27,9 +27,6 @@ namespace demoWinAppDriverPOM.tests
             secondAppBase.Setup();
             keePassBase.TestContext = TestContext;
             keePassBase.Setup();
-
-            //keePassBase.InitializeKeePass();
-            //secondAppBase.InitializeSecondApp();
         }
 
         [TestCleanup]
@@ -60,12 +57,10 @@ namespace demoWinAppDriverPOM.tests
             if (rxMainApp.MainFormPresent())
             {
                 ReportingUtility.LogInfo("RxMainApp is present");
-                //rxMainApp.ClickButton();
             }
             else
             {
                 ReportingUtility.LogInfo("RxMainApp is not present");
-
             }
             rxMainApp.SwitchToDataBase();
             mainWindow.ValidateListItemExists(1);
